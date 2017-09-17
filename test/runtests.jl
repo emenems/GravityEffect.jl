@@ -41,3 +41,8 @@ point_effect = pointEffect((0.,0.,1.5),(0.,0.,-0.5),3000.)*1e+9;
 
 # correctCurvature
 @test correctCurvature((0.,0.),(0.,10000.,10.)) ≈ (10-(10/3.57)^2) atol=0.01
+
+# EOP effects
+include("eopeffects_test.jl")
+
+println("Test ended")

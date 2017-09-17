@@ -1,11 +1,20 @@
 module GravityEffect
 
+import FileTools
+import DataFrames
+
+include("eopeffects.jl");
+
 export prismEffect, cylinderEffect, bouguerEffect, pointEffect, distance,
-	   prism2point, correctCurvature, curvatureEffect
+	   prism2point, correctCurvature, curvatureEffect, tesseroid,
+	   eopeffect
 
 # Earth's radius and Gravitational constant
-const R = 6371000.; # m
-const G = 6.674215*10^(-11.); # Nm^2/kg^2
+const R_const = 6371000.; # m
+const G_const = 6.674215*10^(-11.); # Nm^2/kg^2
+const W_const = 72921151.467064/10^12; # angular velocity
+
+include("tesseroid.jl");
 
 """
 	cylinderEffect(depth,radius,thick,density)
@@ -31,7 +40,7 @@ dg = cylinderEffect(1.,100.,1.,1000.)*1e+9;
 ```
 """
 function cylinderEffect{T<:Float64}(depth::T,radius::T,thick::T,density::T)
-    return 2*pi*G*density*(thick + sqrt(depth^2 + radius^2) - sqrt((depth + thick)^2 + radius^2));
+    return 2*pi*G_const*density*(thick + sqrt(depth^2 + radius^2) - sqrt((depth + thick)^2 + radius^2));
 end
 
 
@@ -54,7 +63,7 @@ dg = bouguerEffect(1.,1000.)*1e+9;
 ```
 """
 function bouguerEffect{T<:Float64}(thick::T,density::T)
-    return 2*pi*G*density*thick;
+    return 2*pi*G_const*density*thick;
 end
 
 """
@@ -100,7 +109,7 @@ function sorokin(x1::Float64,y1::Float64,z1::Float64,x2::Float64,y2::Float64,z2:
             y1*(log(prismLog(x2,y1,z2)/prismLog(x2,y1,z1)) - log(prismLog(x1,y1,z2)/prismLog(x1,y1,z1)));
     g_tan = z2*(prismAtan(z2,x2,y2)-prismAtan(z2,x1,y2)-prismAtan(z2,x2,y1)+prismAtan(z2,x1,y1)) -
             z1*(prismAtan(z1,x1,y1)-prismAtan(z1,x1,y2)-prismAtan(z1,x2,y1)+prismAtan(z1,x2,y2));
-    return -G*(g_log + g_tan);
+    return -G_const*(g_log + g_tan);
 end
 
 """
@@ -125,7 +134,7 @@ function pointEffect(sensor::Tuple{Float64,Float64,Float64},
 					 point::Tuple{Float64,Float64,Float64},
 					 mass::Float64=1.0)
     dist = distance(sensor,point);
-    dg0 = (mass*G)/(dist^2); # direct effect (not in vertical direction)
+    dg0 = (mass*G_const)/(dist^2); # direct effect (not in vertical direction)
     cos_alpha = (sensor[3]-point[3])/(dist); # angle between sensor and mass
     return dg0.*cos_alpha;
 end
@@ -196,7 +205,7 @@ ce = curvatureEffect(10000.0)
 ```
 """
 function curvatureEffect(dist::Float64)
-    return ((sqrt(dist^2 + R^2) - R).*R)/(sqrt(dist^2 + R^2));
+    return ((sqrt(dist^2 + R_const^2) - R_const).*R_const)/(sqrt(dist^2 + R_const^2));
 end
 
 """

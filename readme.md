@@ -6,6 +6,11 @@ This repository contains functions for computation of gravity effect of followin
 * Cylinder: `cylinderEffect`
 * Point mass (or sphere): `pointEffect`
 * Prism (in Cartesian coordinate system) `prismEffect`
+* Tesseroid in geodetic (longitude, latitude, height) coordinates `tesseroid`  
+
+The repository also contains files for downloading/computation of:
+
+* Polar motion and Length of Day effects: `eopeffects`
 
 > Check the function help for instructions and example usage
 
