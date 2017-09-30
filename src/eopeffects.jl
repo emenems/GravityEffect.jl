@@ -1,5 +1,5 @@
 """
-	eopeffect(lon,lat,file,amp_factor)
+	eopEffect(lon,lat,file,amp_factor)
 Compute polar motion and length of day effect on surface gravity
 
 **Input**
@@ -13,13 +13,13 @@ Compute polar motion and length of day effect on surface gravity
 **Example**
 ```
 # Download data automatically
-eop = eopeffect((15.,47.,0.0));
+eop = eopEffect((15.,47.,0.0));
 # Or read data from already downloaded file
-eop = eopeffect(((15.,47.,0.0),filein="/test/input/eop_parameters.c04",
+eop = eopEffect(((15.,47.,0.0),filein="/test/input/eop_parameters.c04",
 			amp_factor=1.16);
 ```
 """
-function eopeffect(sensor::Tuple{Float64,Float64,Float64};
+function eopEffect(sensor::Tuple{Float64,Float64,Float64};
 			filein::String="http://hpiers.obspm.fr/iers/eop/eopc04/eopc04_IAU2000.62-now",
 			amp_factor::Float64=1.16)
 	if !isempty(filein)

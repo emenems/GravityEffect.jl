@@ -10,7 +10,8 @@ This repository contains functions for computation of gravity effect of followin
 
 The repository also contains files for downloading/computation of:
 
-* Polar motion and Length of Day effects: `eopeffects`
+* Polar motion and Length of Day effects: `eopEffects`
+* [Atmacs](http://atmacs.bkg.bund.de/docs/data.php) atmospheric effect on surface gravity: `atmacsEffect`
 
 > Check the function help for instructions and example usage
 

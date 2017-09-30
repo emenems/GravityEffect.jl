@@ -2,12 +2,15 @@ module GravityEffect
 
 import FileTools
 import DataFrames
+import ResampleAndFit
 
 include("eopeffects.jl");
+include("atmacseffect.jl");
 
 export prismEffect, cylinderEffect, bouguerEffect, pointEffect, distance,
 	   prism2point, correctCurvature, curvatureEffect, tesseroid,
-	   eopeffect
+	   eopEffect,
+	   atmacsEffect
 
 # Earth's radius and Gravitational constant
 const R_const = 6371000.; # m

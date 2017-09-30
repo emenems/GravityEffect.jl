@@ -1,48 +1,13 @@
 using GravityEffect
 using Base.Test
+using DataFrames
 
-# bouguerEffect
-thick = 1.234;
-density = 3333.;
-ref = 2.*pi*6.674215e-11*density*thick*1e+9;
-boug_effect = bouguerEffect(thick,density)*1e+9;
-@test ref ≈ boug_effect
-
-# cylinderEffect
-cylin_effect = cylinderEffect(1.,9e+9,thick,density)*1e+9;
-@test cylin_effect ≈ ref atol=0.01
-
-# prismEffect
-prism_effect = prismEffect((0.,0.,1.),(0.,0.,0.),(1.e+7,1.e+7,thick),density)*1e+9;
-@test prism_effect ≈ ref atol=0.1
-prism_effect = prismEffect((0.,0.,0.),(1.,1.,1.),(1.,1.,0.1),2222.)*1e+9;
-@test prism_effect < 0.0
-
-# pointEffect
-point_effect = pointEffect((0.,0.,0.),(0.,1.,0.),1000.)*1e+9;
-@test point_effect == 0.
-point_effect = pointEffect((0.,0.,0.),(1.,1.,10.5),1000.)*1e+9;
-@test point_effect < 0
-ref = 6.674215e-2*3000./4.;# distance 2 m, weight 3000 kg
-point_effect = pointEffect((0.,0.,1.5),(0.,0.,-0.5),3000.)*1e+9;
-@test point_effect ≈ ref atol=0.01
-
-# distance2D
-@test distance((0.,0.),(1.,0.)) ≈ 1.
-
-# distance3D
-@test distance((0.,0.,0.),(0.,0.,1.)) ≈ 1.
-
-# prism2point
-@test prism2point((1.,1.,1.),1000.) ≈ 1000.
-
-# curvatureEffect
-@test curvatureEffect(10000.) ≈ (10/3.57)^2 atol=0.01
-
-# correctCurvature
-@test correctCurvature((0.,0.),(0.,10000.,10.)) ≈ (10-(10/3.57)^2) atol=0.01
-
-# EOP effects
-include("eopeffects_test.jl")
-
-println("Test ended")
+# List of test files. Run the test from GravityEffect.jl folder
+tests = ["gravityeffects_test.jl",
+		 "eopeffects_test.jl",
+		 "atmacseffects_test.jl"];
+# Run all tests in the list
+for i in tests
+	include(i)
+end
+println("End test!")
