@@ -12,6 +12,7 @@ The repository also contains files for downloading/computation of:
 
 * Polar motion and Length of Day effects: `eopEffects`
 * [Atmacs](http://atmacs.bkg.bund.de/docs/data.php) atmospheric effect on surface gravity: `atmacsEffect`
+* [EOST Loading](http://loading.u-strasbg.fr/surface_gravity.php) effects (atmosphere, hydrology, non-tidal ocean loading and pol/LOD effects)
 
 > Check the function help for instructions and example usage
 

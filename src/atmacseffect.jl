@@ -28,7 +28,7 @@ e = atmacsEffect(glofiles=["/test/input/atmacs_all_1.grav",
 function atmacsEffect(;glofiles::Vector{String}=[""],
 					locfiles::Vector{String}=[""],
 					pressure::DataFrames.DataFrame=DataFrames.DataFrame(),
-					admittance::Float64=-3.0);
+					admittance::Float64=-3.0)
 	if !isempty(glofiles)
 		glo,loc = FileTools.loadatmacs(glofiles=glofiles,locfiles=locfiles);
 		if isempty(loc)
