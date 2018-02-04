@@ -45,6 +45,8 @@ function atmacsEffect(;glofiles::Vector{String}=[""],
 			press_atmacs = loc[:pressure]./100;
 			timevec = loc[:datetime];
 		end
+		# convert correction to effect
+		total *= -1;
 		if !isempty(pressure)
 			press_atmacs = interpatm(timevec,press_atmacs,pressure[:datetime]);
 			total = interpatm(timevec,total,pressure[:datetime]);

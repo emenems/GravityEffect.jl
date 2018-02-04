@@ -32,6 +32,7 @@ function eostEffect(filein::String;
 		if !isempty(timevec)
 			eostdata = ResampleAndFit.interpdf(eostdata,timevec,timecol=channels[1])
 		end
+		FileTools.delfile(filein);
 		return eostdata;
 	end
 end
@@ -46,6 +47,6 @@ function eostchannels(filein::String)
 	elseif fileext == "oce"
 		return [:datetime,:total];
 	else #fielex == "hyd" | "inv" | "mog" | "mer"
-		return [:datetime,:local,:glob,:total];
+		return [:datetime,:local,:global,:total];
 	end
 end

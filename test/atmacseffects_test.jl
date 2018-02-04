@@ -5,7 +5,7 @@ function test_atmacsEffect()
 	atm1 = atmacsEffect(glofiles=gurl,locfiles=lurl);
 	glom = readdlm(gurl[1]);
 	locm = readdlm(lurl[1]);
-	totalm = sum(hcat(glom[:,2:end],locm[:,3:end]),2);
+	totalm = -sum(hcat(glom[:,2:end],locm[:,3:end]),2);# - to convert correction to effect
 	pressm = locm[:,2]./100;
 	timem = DateTime(string.(round.(Int,locm[:,1])),"yyyymmddHH")
 	for (i,v) in enumerate(totalm)
@@ -15,7 +15,7 @@ function test_atmacsEffect()
 	end
 	# Test with interpolation to input time vector
 	temp = readdlm(pwd()*"/test/input/atmacs_all_1.grav");
-	totalm2 = sum(temp[:,3:end],2)
+	totalm2 = -sum(temp[:,3:end],2)
 	timem2 = DateTime(string.(round.(Int,temp[:,1])),"yyyymmddHH")
 	press = DataFrame(datetime=[DateTime(2012,2,29,00,00,00),
 								DateTime(2012,2,29,03,00,00)],
