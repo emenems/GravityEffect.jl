@@ -36,6 +36,10 @@ end
 function distanceAndCurvature_test()
 	# distance2D
 	@test distance((0.,0.),(1.,0.)) ≈ 1.
+	# distance2D with vector input
+	d = distance((1.,2.),[0.,0.],[2.,4.])
+	@test d[1] == 1
+	@test d[2] ≈ sqrt(1+4)
 	# distance3D
 	@test distance((0.,0.,0.),(0.,0.,1.)) ≈ 1.
 	# prism2point

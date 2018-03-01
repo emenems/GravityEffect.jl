@@ -3,10 +3,11 @@ using Base.Test
 using DataFrames
 
 # List of test files. Run the test from GravityEffect.jl folder
-tests = ["gravityeffects_test.jl",
+tests = ["simplebodies_test.jl",
 		 "eopeffects_test.jl",
 		 "atmacseffects_test.jl",
-		 "eosteffects_test.jl"];
+		 "eosteffects_test.jl",
+		 "inpolygon_test.jl"];
 # Run all tests in the list
 for i in tests
 	include(i)

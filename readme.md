@@ -21,6 +21,7 @@ Following auxiliary functions are provided:
 * convert prism to point mass (convert density and prism resolution to mass) `prism2point`
 * compute Earth's curvature effect on height (Cartesian coordinates are used): `curvatureEffect`
 * correct height for Earth's curvature: `correctCurvature`
+* find points inside a polygon: `inpolygon`
 
 In addition, following constants are used (not global):
 * `G`: gravity constant
