@@ -7,7 +7,8 @@ tests = ["simplebodies_test.jl",
 		 "eopeffects_test.jl",
 		 "atmacseffects_test.jl",
 		 "eosteffects_test.jl",
-		 "inpolygon_test.jl"];
+		 "inpolygon_test.jl",
+		 "layerresponse_test.jl"];
 # Run all tests in the list
 for i in tests
 	include(i)

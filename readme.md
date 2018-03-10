@@ -8,7 +8,9 @@ This repository contains functions for computation of gravity effect of followin
 * Prism (in Cartesian coordinate system) `prismEffect`
 * Tesseroid in geodetic (longitude, latitude, height) coordinates `tesseroid`  
 
-The repository also contains files for downloading/computation of:
+A complete gravity response to (soil) layers copying the terrain (digital elevation model) in arbitrary depths can be computed using `layerResponse` function.
+
+The repository also contains files for computation/downloading of:
 
 * Polar motion and Length of Day effects: `eopEffects`
 * [Atmacs](http://atmacs.bkg.bund.de/docs/data.php) atmospheric effect on surface gravity: `atmacsEffect`
@@ -26,3 +28,5 @@ Following auxiliary functions are provided:
 In addition, following constants are used (not global):
 * `G`: gravity constant
 * `R`: radius of Earth replacement sphere
+
+> Check the `REQUIRE` file for required packages
