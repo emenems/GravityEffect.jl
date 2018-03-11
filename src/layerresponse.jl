@@ -122,7 +122,8 @@ function layerResponse(sensor::Dict{Symbol,Float64},
 		 outdata[:total] += outdata[zoneX];
 	 end
 	 if !isempty(outfile)
-		 write_layerResponse(sensor,layers,zones,exclude,nanheight,outfile,def_density,outdata)
+		 FileTools.write_layerResponse(sensor,layers,zones,exclude,nanheight,
+		 						outfile,def_density,outdata)
 	 end
 	 return outdata
 end
@@ -274,36 +275,4 @@ function iswithin(bodystart,bodystop,start_depth,end_depth)
 	upperbound = bodystart<=start_depth ? start_depth : bodystart;
 	lowerbound = bodystop>=end_depth ? end_depth : bodystop;
 	return lowerbound>upperbound,upperbound,lowerbound
-end
-
-"""
-Write `layerResponse` results
-"""
-function write_layerResponse(sensor,layers,zones,exclude,nanheight,outfile,def_density,outdata)
-	open(outfile,"w") do fid
-		@printf(fid,"%% layerResponse.jl SETTINGS:\n");
-		# Write settings
-		println(fid,"% Sensor:  $sensor");
-		println(fid,"% Layers:  $layers");
-		println(fid,"% Zones:  $zones");
-		println(fid,"% Exclude:  $exclude");
-		@printf(fid,"%% nanheight: %s\n",nanheight);
-		@printf(fid,"%% outfile: %s\n",outfile);
-		@printf(fid,"%% def_density: %.3f kg/m^3\n",def_density);
-		@printf(fid,"%% Computation date: %s\n",Dates.format(now(),"dd/MM/yyyy HH:MM:SS"))
-		@printf(fid,"%% RESULTS (gravity effect in nm/s^2, depth in m): \n");
-		@printf(fid,"%%  Nr start  stop    total ");
-		for i in 1:length(zones[:radius])
-			@printf(fid," %8s%i","zone",i);
-		end
-		@printf(fid,"\n");
-		for i in 1:size(outdata,1)
-			@printf(fid,"%4i %6.3f %6.3f %9.5f",i,
-					outdata[:start][i],outdata[:stop][i],outdata[:total][i]*1e+9);
-			for j in 1:length(zones[:radius])
-				@printf(fid," %9.5f",outdata[Symbol("zone"*string(j))][i]*1e+9);
-			end
-			@printf(fid,"\n");
-		end
-	end
 end

@@ -11,6 +11,7 @@ include("inpolygon.jl");
 include("tesseroid.jl");
 include("simplebodies.jl");
 include("layerresponse.jl");
+include("data2effect.jl")
 
 export prismEffect, cylinderEffect, bouguerEffect, pointEffect, distance,
 	   prism2point, correctCurvature, curvatureEffect, tesseroid,
@@ -18,7 +19,8 @@ export prismEffect, cylinderEffect, bouguerEffect, pointEffect, distance,
 	   atmacsEffect,
 	   eostEffect,
 	   inpolygon,
-	   layerResponse
+	   layerResponse,
+	   sm2effect
 
 # Earth's radius and Gravitational constant
 const R_const = 6371000.; # m

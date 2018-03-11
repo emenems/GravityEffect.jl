@@ -1,6 +1,7 @@
-GravtityEffect: Julia package for gravity effects
+GravtityEffect
 ================================================================
-This repository contains functions for computation of gravity effect of following bodies:
+This Julia package contains functions for computation of gravity effect of
+following bodies:
 
 * Bouguer plate: `bouguerEffect`
 * Cylinder: `cylinderEffect`
@@ -8,7 +9,10 @@ This repository contains functions for computation of gravity effect of followin
 * Prism (in Cartesian coordinate system) `prismEffect`
 * Tesseroid in geodetic (longitude, latitude, height) coordinates `tesseroid`  
 
-A complete gravity response to (soil) layers copying the terrain (digital elevation model) in arbitrary depths can be computed using `layerResponse` function.
+To compute gravity effect time series use:
+* `layerResponse`: gravity response to (soil) layers copying the terrain (digital
+elevation model) in arbitrary depths. The output of this function can be used in:
+* `sm2effect`: convert soil moisture (m<sup>3</sup>/m<sup>3</sup>) to gravity effect time series (nm/s<sup>2</sup>)  
 
 The repository also contains files for computation/downloading of:
 
@@ -29,4 +33,5 @@ In addition, following constants are used (not global):
 * `G`: gravity constant
 * `R`: radius of Earth replacement sphere
 
-> Check the `REQUIRE` file for required packages
+> Check the `REQUIRE` file for required packages  
+> [FileTools.jl](https://github.com/emenems/FileTools.jl) and [ResampleAndFit.jl](https://github.com/emenems/ResampleAndFit.jl) packages can downloaded from GitHub
