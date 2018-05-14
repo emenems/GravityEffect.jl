@@ -61,8 +61,3 @@ function inpolygon{T<:Real}(x::Matrix{T}, y::Matrix{T}, xv::Vector{T}, yv::Vecto
     id = inpolygon(x[:],y[:],xv,yv);
     return reshape(id,size(x))
 end
-function inpolygon{T<:Real}(x::Matrix{T}, y::Matrix{T},
-            xv::DataFrames.DataArray{T}, yv::DataFrames.DataArray{T})
-    id = inpolygon(x[:],y[:],Vector(xv),Vector(yv));
-    return reshape(id,size(x))
-end

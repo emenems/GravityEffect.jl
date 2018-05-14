@@ -9,7 +9,7 @@ Compute gravity response for soil layers copying the terrain
 * nanheight: return values even when DEM either contains NaNs or the integration radius exceeds the DEM range (`true` by default)
 * exclude: exclude bodies from computation (first zone only!): prism, cylinder or all points inside a polygon.
 * outfile: output file (no output file by default)
-* def_density: default density in kg/m^3
+* def_density: default density in kg/m^3 (10 => 1Vol% == 0.01 m^3/m^3)
 
 **Important notes**
 When using multiple bodies in the `exclude` parameter, pay attention to possible overlapping.

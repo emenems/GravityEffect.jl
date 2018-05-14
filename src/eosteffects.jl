@@ -15,19 +15,18 @@ Compute/download EOST loading effect on surface gravity
 atm = eostEffect("http://loading.u-strasbg.fr/GGP/atmos/0.10/WE02173h.mog")
 # Or read data from already downloaded file (containing Earth rotation effect)
 # + resample to given time vector (timein)
-timein = @data(collect(DateTime(2012,2,29,00,00,00):Dates.Hour(1):
-				DateTime(2012,2,29,03,00,00)));
+timein = collect(DateTime(2012,2,29,00,00,00):Dates.Hour(1):
+				DateTime(2012,2,29,03,00,00));
 pol = eostEffect("/test/input/eost_data.rot",timevec=timein);
 ```
 """
-function eostEffect(filein::String;
-					timevec::DataFrames.DataArray=DataFrames.@data([]))
+function eostEffect(filein::String;timevec::Vector{DateTime}=Vector{DateTime}())
 	if !isempty(filein)
 		eostfile = FileTools.downfile(filein);
 		eostdata = FileTools.readggp(eostfile);
 		channels = eostchannels(filein);
 		if length(names(eostdata)) == length(channels)
-			DataFrames.rename!(eostdata,names(eostdata),channels)
+			DataFrames.rename!(eostdata,[f => t for (f,t) = zip(names(eostdata),channels)]);
 		end
 		if !isempty(timevec)
 			eostdata = ResampleAndFit.interpdf(eostdata,timevec,timecol=channels[1])

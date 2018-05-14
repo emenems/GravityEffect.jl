@@ -11,7 +11,7 @@ function test_eostEffects()
 	end
 
 	# Load + interpolation
-	timein = @data([DateTime(1980,01,02)]);
+	timein = [DateTime(1980,01,02)];
 	eost2 = eostEffect(pwd()*"/test/input/eost_data.rot",timevec=timein);
 	@test size(eost2) == (1,6)
 	@test eost2[:datetime] == timein
