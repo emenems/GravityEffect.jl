@@ -21,7 +21,7 @@ dg = cylinderEffect(1.,100.,1.,1000.)*1e+9;
 
 ```
 """
-function cylinderEffect{T<:Float64}(depth::T,radius::T,thick::T,density::T)
+function cylinderEffect(depth::T,radius::T,thick::T,density::T) where T<:Real
     return 2*pi*G_const*density*(thick + sqrt(depth^2 + radius^2) - sqrt((depth + thick)^2 + radius^2));
 end
 
@@ -44,7 +44,7 @@ Compute Bouguer plate effect
 dg = bouguerEffect(1.,1000.)*1e+9;
 ```
 """
-function bouguerEffect{T<:Float64}(thick::T,density::T)
+function bouguerEffect(thick::T,density::T) where T<:Real
     return 2*pi*G_const*density*thick;
 end
 
@@ -170,7 +170,7 @@ function distance(point1::Tuple{Float64,Float64,Float64},point2::Tuple{Float64,F
     return sqrt((point1[1]-point2[1])^2 + (point1[2]-point2[2])^2 + (point1[3]-point2[3])^2);
 end
 function distance(point1::Tuple{Float64,Float64},x::Vector{Float64},y::Vector{Float64})
-	d = Vector{Float64}(length(x));
+	d = Vector{Float64}(undef,length(x));
 	for i in 1:length(d)
 		d[i] = distance(point1,(x[i],y[i]));
 	end
@@ -246,5 +246,5 @@ Auxiliary function used inside sorokin formula (inner product + compute atan2)
 
 """
 function prismAtan(first::Float64,second::Float64,third::Float64)
-    return atan2(first*sqrt(second^2+third^2+first^2),second*third)
+    return atan(first*sqrt(second^2+third^2+first^2),second*third)
 end

@@ -2,10 +2,10 @@
 function test_eostEffects()
 	# Load without interpolation
 	eost1 = eostEffect(pwd()*"/test/input/eost_data.rot");
-	eost1m = readdlm(pwd()*"/test/input/eost_data.rot",skipstart=14)[1:end-1,:];
+	eost1m = DelimitedFiles.readdlm(pwd()*"/test/input/eost_data.rot",skipstart=14)[1:end-1,:];
 	@test names(eost1) == [:datetime,:pol_lod_total,:pol_solid,
 							:pol_ocean,:lod_solid,:lod_load];
-	@test eost1[:datetime] == DateTime.(string.(eost1m[:,1]),"yyyymmdd")
+	@test eost1[:datetime] == DateTime.(string.(eost1m[:,1]),"yyyymmdd",locale="english")
 	for i in 3:size(eost1m,2)
 		@test sum(eost1[i-1]) ≈ sum(eost1m[:,i])
 	end

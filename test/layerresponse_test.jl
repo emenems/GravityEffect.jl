@@ -21,10 +21,10 @@ function layerResponse_test1()
 	# compute "should" value
 	mainpart = [prismEffect((sensor[:x],sensor[:y],sensor[:z]+sensor[:sensHeight]),
 						(sensor[:x],sensor[:y],sensor[:z]-layers[:start][1]),
-						(150.+zones[:resolution][2],250.+zones[:resolution][2],1.),10.),
+						(150.0+zones[:resolution][2],250.0+zones[:resolution][2],1.),10.),
 			    prismEffect((sensor[:x],sensor[:y],sensor[:z]+sensor[:sensHeight]),
 			 			(sensor[:x],sensor[:y],sensor[:z]-layers[:start][2]),
-						(150.+zones[:resolution][2],250.+zones[:resolution][2],1.),10.)]
+						(150.0+zones[:resolution][2],250.0+zones[:resolution][2],1.),10.)]
 	zone1 = [cylinderEffect(sensor[:sensHeight]+layers[:start][1],zones[:radius][1],
 						layers[:stop][1]-layers[:start][1],10.),
 			cylinderEffect(sensor[:sensHeight]+layers[:start][2],zones[:radius][1],
@@ -37,17 +37,17 @@ function layerResponse_test1()
 						layers[:stop][2]-layers[:start][2],10.)];
 	exclude2 = [prismEffect((sensor[:x],sensor[:y],sensor[:z]+sensor[:sensHeight]),
 						(exclude[:prism][:x][1],exclude[:prism][:y][1],sensor[:z]-layers[:start][1]),
-						(exclude[:prism][:dx][1],exclude[:prism][:dy][1],layers[:stop][1]-layers[:start][1]),10.),
+						(exclude[:prism][:dx][1],exclude[:prism][:dy][1],layers[:stop][1]-layers[:start][1]),10.0),
 				prismEffect((sensor[:x],sensor[:y],sensor[:z]+sensor[:sensHeight]),
 						(exclude[:prism][:x][2],exclude[:prism][:y][2],sensor[:z]-layers[:start][2]),
-						(exclude[:prism][:dx][2],exclude[:prism][:dy][2],layers[:stop][2]-layers[:start][2]),10.)];
+						(exclude[:prism][:dx][2],exclude[:prism][:dy][2],layers[:stop][2]-layers[:start][2]),10.0)];
 	# polysong (see the input file)
 	exclude3 = [prismEffect((sensor[:x],sensor[:y],sensor[:z]+sensor[:sensHeight]),
-						(25.+20.,225.,sensor[:z]-layers[:start][1]),
-						(40.,70.,layers[:stop][1]-layers[:start][1]),10.)
+						(25.0+20.0,225.0,sensor[:z]-layers[:start][1]),
+						(40.0,70.0,layers[:stop][1]-layers[:start][1]),10.)
 				prismEffect((sensor[:x],sensor[:y],sensor[:z]+sensor[:sensHeight]),
-						(25.+20.,225.,sensor[:z]-layers[:start][2]),
-						(40.,70.,layers[:stop][2]-layers[:start][2]),10.)]
+						(25.0+20.,225.0,sensor[:z]-layers[:start][2]),
+						(40.0,70.0,layers[:stop][2]-layers[:start][2]),10.0)]
 	compdata = (mainpart-exclude1-exclude2-exclude3).*1e+9
 
 	# Compare results without exclusion
@@ -61,9 +61,9 @@ end
 function layerResponse_test_aux1()
 	dem_in = pwd()*"/test/input/dem_data.asc";
 	dem = GravityEffect.response_load_dem(dem_in)
-	@test dem[:y] == collect(25.:50:25.+5*50)
-	@test dem[:x] == collect(25.:50:25.+3*50)
-	@test dem[:height] == zeros(Float64,(length(dem[:y]),length(dem[:x]))).+100.
+	@test dem[:y] == collect(25.:50:25.0+5*50)
+	@test dem[:x] == collect(25.:50:25.0+3*50)
+	@test dem[:height] == zeros(Float64,(length(dem[:y]),length(dem[:x]))).+100.0
 	@test GravityEffect.interpheight(26.,76.,dem) == 100.
 	@test isnan(GravityEffect.interpheight(24.99,76.,dem))
 
@@ -103,14 +103,14 @@ function layerResponse_test_aux2()
 	dem[:x],dem[:y] = ResampleAndFit.meshgrid(dem[:x],dem[:y]);
 	polyg = Dict(:file=>pwd()*"/test/input/exclusion_polygon.txt",
 				 :start=>0.,:stop=>1.);
-	density0 = dem[:x].*0 + 10.;
+	density0 = dem[:x].*0.0 .+ 10.0;
 	density = copy(density0);
 	GravityEffect.excludepolygon!(polyg,dem,0.,1.,density)
-	@test sum(density) == 10*(size(dem[:x],1)*size(dem[:y],2))-10
-	@test density[5,1] == 0.
+	@test sum(density) == 10.0*(size(dem[:x],1)*size(dem[:y],2))-10.0
+	@test density[5,1] == 0.0
 	density = copy(density0);
 	GravityEffect.excludepolygon!(polyg,dem,1.,2.,density)
-	@test sum(density) == 10*(size(dem[:x],1)*size(dem[:y],2))
+	@test sum(density) == 10.0*(size(dem[:x],1)*size(dem[:y],2))
 end
 
 layerResponse_test_aux1();

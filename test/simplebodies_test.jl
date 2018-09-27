@@ -2,7 +2,7 @@
 function bouguerAndCylinder_test()
 	thick = 1.234;
 	density = 3333.;
-	ref = 2.*pi*6.674215e-11*density*thick*1e+9;
+	ref = 2.0*pi*6.674215e-11*density*thick*1e+9;
 	boug_effect = bouguerEffect(thick,density)*1e+9;
 	@test ref ≈ boug_effect
 
@@ -14,7 +14,7 @@ end
 function prismEffect_test()
 	thick = 1.234;
 	density = 3333.;
-	ref = 2.*pi*6.674215e-11*density*thick*1e+9;
+	ref = 2.0*pi*6.674215e-11*density*thick*1e+9;
 	# prismEffect
 	prism_effect = prismEffect((0.,0.,1.),(0.,0.,0.),(1.e+7,1.e+7,thick),density)*1e+9;
 	@test prism_effect ≈ ref atol=0.1
@@ -28,7 +28,7 @@ function pointEffect_test()
 	@test point_effect == 0.
 	point_effect = pointEffect((0.,0.,0.),(1.,1.,10.5),1000.)*1e+9;
 	@test point_effect < 0
-	ref = 6.674215e-2*3000./4.;# distance 2 m, weight 3000 kg
+	ref = 6.674215e-2*3000.0/4.0;# distance 2 m, weight 3000 kg
 	point_effect = pointEffect((0.,0.,1.5),(0.,0.,-0.5),3000.)*1e+9;
 	@test point_effect ≈ ref atol=0.01
 end

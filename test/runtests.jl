@@ -1,6 +1,9 @@
 using GravityEffect
-using Base.Test
+using Test
 using DataFrames
+using Dates
+import DelimitedFiles
+import ResampleAndFit
 
 # List of test files. Run the test from GravityEffect.jl folder
 tests = ["simplebodies_test.jl",

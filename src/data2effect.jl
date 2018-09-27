@@ -45,5 +45,5 @@ Auxiliary function to find index (in response) corresponding to given depth
 function finddepth(currdepth::Float64,
 			startdepths::Vector{Float64},stopdepths::Vector{Float64})
 	r = map(x->x<=currdepth,startdepths) .& map(x->x>currdepth,stopdepths)
-	return find(x->x.==true,r) # return index
+	return findall(x->x.==true,r) # return index
 end

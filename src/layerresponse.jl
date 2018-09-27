@@ -50,7 +50,7 @@ outdata = layerResponse(sensor,layers,zones,
 """
 function layerResponse(sensor::Dict{Symbol,Float64},
 					 layers::Dict{Symbol,Array{Float64,1}},
-					 zones::Dict{Symbol,Any};
+					 zones;
 					 exclude::Dict{Symbol,}=Dict(:nothing=>""),
 					 nanheight::Bool=true,
 					 outfile::String="",
@@ -84,9 +84,9 @@ function layerResponse(sensor::Dict{Symbol,Float64},
 		 end
 		 # density matrix used to include only grid cells within current zone
 		 density = zeros(Float64,size(dem[:height])) .+ def_density;
-		 density[dem[:distance].>zones[:radius][i]] = 0.; # all points above intergration radius
+		 density[dem[:distance].>zones[:radius][i]] .= 0.; # all points above intergration radius
 		 if i > 1 # remove adjacent, i.e. the previous zone
-			 density[dem[:distance].<=zones[:radius][i-1]] = 0.;
+			 density[dem[:distance].<=zones[:radius][i-1]] .= 0.;
 		 end
 		 if nanheight
 			 density[isnan.(dem[:height])] .= 0.0;
@@ -132,7 +132,7 @@ end
 auxiliary function to prepare DEM for computation: load + resample to computation grid
 """
 function response_prepare_dem(file_in::String,radius_in::Float64,resol_in::Float64,
-							  sensor::Dict{Symbol,Float64})::Dict{Symbol,Any}
+							  sensor::Dict{Symbol,Float64})
 	dem = response_load_dem(file_in);
 	# resample DEM
 	if resol_in > 0
@@ -154,7 +154,7 @@ end
 """
 auxiliary function to load DEMs
 """
-function response_load_dem(file_in::String)::Dict{Symbol,Any}
+function response_load_dem(file_in::String)
 	if split(file_in,".")[end] == "asc"
 		return FileTools.loadascii(file_in);
 	end
@@ -171,7 +171,7 @@ end
 """
 auxiliary function to interpolate height of a point
 """
-function interpheight(x::Float64,y::Float64,dem::Dict{Symbol,Any})::Float64
+function interpheight(x::Float64,y::Float64,dem)::Float64
 	ResampleAndFit.interp2(dem[:x],dem[:y],dem[:height],x,y)
 end
 
@@ -180,7 +180,7 @@ auxiliary function to produce a sum of all gravity effects for current (=one)
 layer
 """
 function response_grid_cells(sensor::Dict{Symbol,Float64},
-						    dem::Dict{Symbol,Any},density::Matrix{Float64},
+						    dem,density::Matrix{Float64},
 							start_depth::Float64,end_depth::Float64)::Float64
 	# get constatnt resolution of the DEM & coordinates of the point of computation
 	resol = (dem[:x][1,2]-dem[:x][1,1], # dx
@@ -247,24 +247,24 @@ function interpdata!(bodyin::Dict{Symbol,},
 	bodyin[col] = length(bodyin[:x])==1 ? temp[1] : temp;
 end
 
-function excludepolygon!(polyg::Dict{Symbol,},dem::Dict{Symbol,Any},
+function excludepolygon!(polyg::Dict{Symbol,},dem,
 						start_depth::Float64,end_depth::Float64,
 						density_use::Matrix{Float64})
 	for (i,v) in enumerate((length(polyg[:start])==1 ? [polyg[:file]] : polyg[:file]))
 		if iswithin(polyg[:start][i],polyg[:stop][i],start_depth,end_depth)[1]
 			polygxy = readpolygon(v);
 			# one file can contain multiple polygons separated by NaNs
-			r = any(isnan.(polygxy[:x])) ? find(isnan,polygxy[:x]) : [length(polygxy[:x])+1];
+			r = any(isnan.(polygxy[:x])) ? findall(isnan,polygxy[:x]) : [length(polygxy[:x])+1];
 			s = 1;
 			for j in r
-				density_use[inpolygon(dem[:x],dem[:y],polygxy[:x][s:j-1],polygxy[:y][s:j-1])] = 0.;
+				density_use[inpolygon(dem[:x],dem[:y],polygxy[:x][s:j-1],polygxy[:y][s:j-1])] .= 0.0;
 				s = j+1;
 			end
 		end
 	end
 end
 function readpolygon(filein)
-	temp = readdlm(filein,comment_char='%');
+	temp = DelimitedFiles.readdlm(filein,comments=true,comment_char='%');
 	DataFrame(x = temp[:,1],y = temp[:,2]);
 end
 """

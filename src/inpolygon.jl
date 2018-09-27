@@ -21,7 +21,7 @@ idvec = inpolygon([0.2,0.0],[0.3,0.0],[0.,1.,1.,0.,0.],[0.,0.,1.,1.,0.])
 
 """
 
-function inpolygon{T<:Real}(x::T, y::T, xv::Vector{T}, yv::Vector{T})
+function inpolygon(x::T, y::T, xv::Vector{T}, yv::Vector{T}) where T <: Real
     npol = j = length(xv);
     #inside = on = Vector{Bool}(length(x));
 	inside = on = false;
@@ -49,15 +49,15 @@ function inpolygon{T<:Real}(x::T, y::T, xv::Vector{T}, yv::Vector{T})
   	return (inside .| on);
 end
 # Version for vector input
-function inpolygon{T<:Real}(x::Vector{T}, y::Vector{T}, xv::Vector{T}, yv::Vector{T})
-    id = Vector{Bool}(length(x));
+function inpolygon(x::Vector{T}, y::Vector{T}, xv::Vector{T}, yv::Vector{T}) where T <: Real
+    id = Vector{Bool}(undef,length(x));
     for i = 1:length(x)
         id[i] = inpolygon(x[i],y[i],xv,yv);
     end
     return id
 end
 # Version for matrix input
-function inpolygon{T<:Real}(x::Matrix{T}, y::Matrix{T}, xv::Vector{T}, yv::Vector{T})
+function inpolygon(x::Matrix{T}, y::Matrix{T}, xv::Vector{T}, yv::Vector{T}) where T <: Real
     id = inpolygon(x[:],y[:],xv,yv);
     return reshape(id,size(x))
 end
