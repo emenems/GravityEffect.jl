@@ -4,7 +4,7 @@ function layerResponse_test1()
 				:sensHeight => 1.0) # will be added to altitude (:z)
 	layers=Dict(:start => [0.0, 1.0], # starting depth of the soil layer
 				:stop  => [1.0, 2.0]) # end of the soil layer
-	dem_in = pwd()*"/test/input/dem_data.asc";
+	dem_in = joinpath(dirname(@__DIR__),"test","input","dem_data.asc");
 	zones =Dict(:dem   => [dem_in,dem_in], # input DEMs
 				:radius=> [50.,200.], # integration radius
 				:resolution => [0.1,0.2], # resolution of the zone (set to negative value to keep original DEM resolution)
@@ -12,11 +12,11 @@ function layerResponse_test1()
 	exclude = Dict(:cylinder=>Dict(:radius=>1.,:start=>0.5,:stop=>2.),
 				   :prism=>Dict(:x=>[100.,106.],:y=>[155.,156.],:dx=>[2.,3.],:dy=>[1.5,1.8],
 				   				:start=>[0.,1.],:stop=>[1.,2.]),
-				   :polygon=>Dict(:file=>pwd()*"/test/input/exclusion_polygon.txt",
+				   :polygon=>Dict(:file=>joinpath(dirname(@__DIR__),"test","input","exclusion_polygon.txt"),
 				   				  :start=>0.,:stop=>2.));
 	outdata0 = layerResponse(sensor,layers,zones)
 	outdata1 = layerResponse(sensor,layers,zones,exclude=exclude,
-				outfile=pwd()*"/test/output/layerResponse_results.txt");
+				outfile=joinpath(dirname(@__DIR__),"test","output","layerResponse_results.txt"));
 
 	# compute "should" value
 	mainpart = [prismEffect((sensor[:x],sensor[:y],sensor[:z]+sensor[:sensHeight]),
@@ -59,7 +59,7 @@ function layerResponse_test1()
 end
 
 function layerResponse_test_aux1()
-	dem_in = pwd()*"/test/input/dem_data.asc";
+	dem_in = joinpath(dirname(@__DIR__),"test","input","dem_data.asc");
 	dem = GravityEffect.response_load_dem(dem_in)
 	@test dem[:y] == collect(25.:50:25.0+5*50)
 	@test dem[:x] == collect(25.:50:25.0+3*50)
@@ -98,10 +98,10 @@ function layerResponse_test_aux1()
 	@test tc ≈ dg
 end
 function layerResponse_test_aux2()
-	dem_in = pwd()*"/test/input/dem_data.asc";
+	dem_in = joinpath(dirname(@__DIR__),"test","input","dem_data.asc");
 	dem = GravityEffect.response_load_dem(dem_in)
 	dem[:x],dem[:y] = ResampleAndFit.meshgrid(dem[:x],dem[:y]);
-	polyg = Dict(:file=>pwd()*"/test/input/exclusion_polygon.txt",
+	polyg = Dict(:file=>joinpath(dirname(@__DIR__),"test","input","exclusion_polygon.txt"),
 				 :start=>0.,:stop=>1.);
 	density0 = dem[:x].*0.0 .+ 10.0;
 	density = copy(density0);

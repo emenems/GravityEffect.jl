@@ -17,4 +17,3 @@ tests = ["simplebodies_test.jl",
 for i in tests
 	include(i)
 end
-println("End test!")
