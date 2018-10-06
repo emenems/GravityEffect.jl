@@ -1,9 +1,9 @@
 module GravityEffect
 
-import FileTools
 using DataFrames
 using Dates
 import DelimitedFiles
+import FileTools
 import ResampleAndFit
 
 include("eopeffects.jl");

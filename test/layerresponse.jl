@@ -1,5 +1,4 @@
-# layerResponse
-function layerResponse_test1()
+@testset "Layer Response: main" begin
 	sensor=Dict(:x => 100., :y => 150., :z => 100., # coordinates (z=altitude)
 				:sensHeight => 1.0) # will be added to altitude (:z)
 	layers=Dict(:start => [0.0, 1.0], # starting depth of the soil layer
@@ -58,7 +57,7 @@ function layerResponse_test1()
 	@test isapprox(outdata1[:total].*1e+9,compdata,atol=1e-4)
 end
 
-function layerResponse_test_aux1()
+@testset "Layer Response: auxiliary" begin
 	dem_in = joinpath(dirname(@__DIR__),"test","input","dem_data.asc");
 	dem = GravityEffect.response_load_dem(dem_in)
 	@test dem[:y] == collect(25.:50:25.0+5*50)
@@ -96,8 +95,7 @@ function layerResponse_test_aux1()
 	tc = GravityEffect.excludecylinder(sensor,cylinder,depth_start,depth_stop).*1e+9
 	dg = cylinderEffect(1.5+cylinder[:start],cylinder[:radius],0.5,1000.)*1e+9;
 	@test tc ≈ dg
-end
-function layerResponse_test_aux2()
+
 	dem_in = joinpath(dirname(@__DIR__),"test","input","dem_data.asc");
 	dem = GravityEffect.response_load_dem(dem_in)
 	dem[:x],dem[:y] = ResampleAndFit.meshgrid(dem[:x],dem[:y]);
@@ -112,7 +110,3 @@ function layerResponse_test_aux2()
 	GravityEffect.excludepolygon!(polyg,dem,1.,2.,density)
 	@test sum(density) == 10.0*(size(dem[:x],1)*size(dem[:y],2))
 end
-
-layerResponse_test_aux1();
-layerResponse_test_aux2();
-layerResponse_test1();

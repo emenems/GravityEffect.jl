@@ -1,5 +1,4 @@
-# inpolygon
-function test_inpolygon();
+@testset "In-polygon" begin
 	xv = [0,10,10,0.];
 	yv = [0,0,10,10.];
 	# Vertex, edge, outside
@@ -10,5 +9,3 @@ function test_inpolygon();
 	@test o[2] == true;
 	@test o[end] == false;
 end
-
-test_inpolygon();

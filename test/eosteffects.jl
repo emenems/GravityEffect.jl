@@ -1,5 +1,4 @@
-# Unit test for EOST Loading effects
-function test_eostEffects()
+@testset "EOST loading" begin
 	# Load without interpolation
 	eost1 = eostEffect(joinpath(dirname(@__DIR__),"test","input","eost_data.rot"));
 	eost1m = DelimitedFiles.readdlm(joinpath(dirname(@__DIR__),"test","input","eost_data.rot"),skipstart=14)[1:end-1,:];
@@ -19,5 +18,3 @@ function test_eostEffects()
 		@test eost2[i-1][1] ≈ eost1m[2,i]
 	end
 end
-
-test_eostEffects();

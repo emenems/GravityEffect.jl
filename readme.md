@@ -1,5 +1,10 @@
 GravtityEffect
 ================================================================
+[![Build Status](https://travis-ci.org/emenems/GravityEffect.jl.svg?branch=master)](https://travis-ci.org/emenems/GravityEffect.jl)
+[![codecov](https://codecov.io/gh/emenems/GravityEffect.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/emenems/GravityEffect.jl)
+[![Coverage Status](https://coveralls.io/repos/github/emenems/GravityEffect.jl/badge.svg?branch=master)](https://coveralls.io/github/emenems/GravityEffect.jl?branch=master)
+
+
 This Julia package contains functions for computation of gravity effect of
 following bodies:
 
@@ -32,6 +37,9 @@ Following auxiliary functions are provided:
 In addition, following constants are used (not global):
 * `G`: gravity constant
 * `R`: radius of Earth replacement sphere
+
+## Usage
+* Check the function help for instructions and example usage, e.g., `?bouguerEffect`
 
 > Check the `REQUIRE` file for required packages  
 > [FileTools.jl](https://github.com/emenems/FileTools.jl) and [ResampleAndFit.jl](https://github.com/emenems/ResampleAndFit.jl) packages can downloaded from GitHub

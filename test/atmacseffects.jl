@@ -1,5 +1,4 @@
-# Unit test for Atmacs gravity effect
-function test_atmacsEffect()
+@testset "Atmacs effect" begin
 	gurl = [joinpath(dirname(@__DIR__),"test","input","atmacs_glo.grav")];
 	lurl = [joinpath(dirname(@__DIR__),"test","input","atmacs_loc.grav")];
 	atm1 = atmacsEffect(glofiles=gurl,locfiles=lurl);
@@ -27,5 +26,3 @@ function test_atmacsEffect()
    @test atm2[:effect][1]*1e+9 ≈ totalm2[1]*1e+9
    @test atm2[:effect][2]*1e+9 ≈ totalm2[2]*1e+9-3.0; # -3 for default admittance
 end
-
-test_atmacsEffect();

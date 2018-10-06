@@ -1,4 +1,4 @@
-function sm2effect_test()
+@testset "Data 2 effect" begin
 	resp = DataFrame(layer=[1,2],start=[0.,1.],stop=[1.,2.],
 					     total=[4e-9,3e-9],zone1=[3e-9,2e-9],zone2=[1e-9,1e-9])
 	sm_in = DataFrame(node1=[0.01,0.2,0.3,0.4],
@@ -12,5 +12,3 @@ function sm2effect_test()
 	@test all(isapprox.(out[:node2], sm_in[:node2]*100*resp[:total][2].*1e+9))
 	@test all(isapprox.(out[:total],out[:node1].+out[:node2]))
 end
-
-sm2effect_test();

@@ -1,0 +1,14 @@
+language: julia
+julia:
+    - 1.0
+os:
+    - linux
+    - osx
+notifications:
+    email: false
+sudo: false
+before_script:
+- julia -e 'using Pkg; Pkg.add(PackageSpec(url="https://github.com/emenems/FileTools.jl")); Pkg.add(PackageSpec(url="https://github.com/emenems/ResampleAndFit.jl"));'
+after_success:
+- julia -e 'using Pkg; cd(Pkg.dir("GravityEffect")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
+- julia -e 'using Pkg; cd(Pkg.dir("GravityEffect")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(process_folder())'
