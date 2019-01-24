@@ -22,7 +22,7 @@ export prismEffect, cylinderEffect, bouguerEffect, pointEffect, distance,
 	   eostEffect,
 	   inpolygon,
 	   layerResponse,
-	   sm2effect
+	   sm2effect, aggregate_layer	
 
 # Earth's radius and Gravitational constant
 const R_const = 6371000.; # m

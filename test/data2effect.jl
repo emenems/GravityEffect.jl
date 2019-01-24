@@ -11,4 +11,20 @@
 	@test all(isapprox.(out[:node1], sm_in[:node1]*100*resp[:total][1].*1e+9))
 	@test all(isapprox.(out[:node2], sm_in[:node2]*100*resp[:total][2].*1e+9))
 	@test all(isapprox.(out[:total],out[:node1].+out[:node2]))
+	
+	
+	layer_response = DataFrame(layer = [1,2,3,4], start = [0.0,0.1,0.2,0.3], stop = [0.1,0.2,0.3,0.4],
+							total = [4.,50.,61.,70.], zone1 = [3.,40.,50.,60.], zone2 = [1.,10.,11.,10.]);
+	layer_agg = aggregate_layer(layer_response,[0.0,0.2,0.4],[0.2,0.4,0.6]);
+	# test
+	@test layer_agg[:total][1:2] == [4.0+50.0,61.0+70.0]
+	@test layer_agg[:zone1][1:2] == [3.0+40.0,50.0+60.0]
+	@test layer_agg[:zone2][1:2] == [1.0+10.0,11.0+10.0]
+	@test isnan(layer_agg[:total][3])
+	@test isnan(layer_agg[:zone1][3])
+	@test isnan(layer_agg[:zone2][3])
+	@test names(layer_response) == names(layer_agg)
+	@test layer_agg[:start] == [0.0,0.2,0.4];
+	@test layer_agg[:stop] == [0.2,0.4,0.6];
+	@test layer_agg[:layer] == [1,2,3];
 end

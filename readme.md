@@ -33,6 +33,7 @@ Following auxiliary functions are provided:
 * compute Earth's curvature effect on height (Cartesian coordinates are used): `curvatureEffect`
 * correct height for Earth's curvature: `correctCurvature`
 * find points inside a polygon: `inpolygon`
+* aggregate unit `layerResponse` to required depth range: `aggregate_layers`
 
 In addition, following constants are used (not global):
 * `G`: gravity constant
